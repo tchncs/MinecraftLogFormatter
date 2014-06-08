@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -17,24 +19,26 @@ import java.util.Scanner;
 public class LogFormatter
 {
     private static String _file;
-    private static String _htmlBegin;
-    private static String _htmlEnd;
-    private static String _output;
+    private static ArrayList<LogPage> _pages;
     
     public static void main(String[] args)
     {
-        _output = "";
+        _pages = new ArrayList<LogPage>();
         
         // Get file location via args or input
         _file = initFile(args);
         
-        // Initialize fields with HTML-code
-        initHTML();
-        
         // Parse the log
         parseLog(_file);
         
-        System.out.println(_output);
+        _pages.get(0).setAsFirstPage();
+        
+        _pages.get(_pages.size()-1).setAsLastPage();
+        
+        for (LogPage page : _pages)
+        {
+            page.print();
+        }
     }
     
     /**
@@ -68,21 +72,6 @@ public class LogFormatter
         
         return file;
     }
-    
-    /**
-     * 
-     */
-    private static void initHTML()
-    {
-        _htmlBegin  = "<html>" + System.lineSeparator();
-        _htmlBegin += "<head>" + System.lineSeparator();
-        _htmlBegin += "<title>Colored Minecraft log</title>" + System.lineSeparator();
-        _htmlBegin += "</head>" + System.lineSeparator();
-        _htmlBegin += "<body bgcolor=#000000>" + System.lineSeparator();
-
-        _htmlEnd  = "</body>" + System.lineSeparator();
-        _htmlEnd += "</html>" + System.lineSeparator();
-    }
 
     /**
      * Reads the log line by line and calls the line parser
@@ -94,14 +83,32 @@ public class LogFormatter
         Path path = Paths.get(filename);
         try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
         {
-            _output = _htmlBegin;
+            String output = "";
+            int lines = 0;
+            int pageNo = 0;
+            
             while (scanner.hasNextLine())
             {
+                if (lines < 2)
+                {
+                    lines++;
+                }
+                else
+                {
+                    _pages.add(new LogPage(pageNo, output));
+                    output = "";
+                    lines = 0;
+                }
+                
                 String line = scanner.nextLine();
                 line = parseLine(line);
-                _output += line + System.lineSeparator();
+                output += line + System.lineSeparator();
             }
-            _output += _htmlEnd;
+            
+            if (!output.equals(""))
+            {
+                _pages.add(new LogPage(pageNo, output));                
+            }
         }
         catch (Exception e)
         {
