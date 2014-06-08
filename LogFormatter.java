@@ -84,7 +84,19 @@ public class LogFormatter
         line = line.replace("Ü", "&Uuml;");
         line = line.replace("ß", "&szlig;");
         
-        // TODO: Add colors
+        // Add colors
+        if (line.contains("WARN"))
+        {
+            line = "<span style=\"color:#FF0000\">" + line + "</span>";
+        }
+        else if (line.contains("INFO"))
+        {
+            line = "<span style=\"color:#FFFFFF\">" + line + "</span>";
+        }
+        else
+        {
+            line = "<span style=\"color:#0000FF\">" + line + "</span>";
+        }
         
         return line;
     }
