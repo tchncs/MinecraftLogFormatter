@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -49,7 +48,7 @@ public class LogFormatter
      */
     private static String initFile(String[] args)
     {
-        String file;
+        String file = "";
         
         if (args.length > 0)
         {
@@ -84,20 +83,24 @@ public class LogFormatter
         try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
         {
             String output = "";
+            int linesPerPageInit = 100;
+            int linesPerPage = linesPerPageInit;
             int lines = 0;
             int pageNo = 0;
             
             while (scanner.hasNextLine())
             {
-                if (lines < 2)
+                if (lines < linesPerPage)
                 {
                     lines++;
                 }
                 else
                 {
                     _pages.add(new LogPage(pageNo, output));
+                    pageNo++;
                     output = "";
                     lines = 0;
+                    linesPerPage = linesPerPageInit-1;
                 }
                 
                 String line = scanner.nextLine();
