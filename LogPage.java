@@ -1,14 +1,19 @@
 package de.agent94ger.minecraft.LogFormatter;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class LogPage
 {
-    private int _pageNo;
-    private String _htmlBegin;
-    private String _htmlContent;
-    private String _htmlEnd;
-    private String _htmlLinkBegin;
-    private String _htmlPrevEnd;
-    private String _htmlNextEnd;
+    private int     _pageNo;
+    private String  _htmlBegin;
+    private String  _htmlContent;
+    private String  _htmlEnd;
+    private String  _htmlLinkBegin;
+    private String  _htmlPrevEnd;
+    private String  _htmlNextEnd;
     private boolean _hasPrev;
     private boolean _hasNext;
     
@@ -23,6 +28,13 @@ public class LogPage
         _htmlBegin += "<title>Minecraft log</title>" + System.lineSeparator();
         _htmlBegin += "</head>" + System.lineSeparator();
         _htmlBegin += "<body bgcolor=#000000>" + System.lineSeparator();
+        _htmlBegin += "<style type=\"text/css\">" + System.lineSeparator();
+        _htmlBegin += "a:link { color:#FFFFFF; }" + System.lineSeparator();
+        _htmlBegin += "a:visited { color:#FFFFFF; }" + System.lineSeparator();
+        _htmlBegin += "a:hover { color:#FFFFFF; }" + System.lineSeparator();
+        _htmlBegin += "a:active { color:#FFFFFF; }" + System.lineSeparator();
+        _htmlBegin += "a:focus { color:#FFFFFF; }" + System.lineSeparator();
+        _htmlBegin += "</style>" + System.lineSeparator();
         _htmlBegin += "<p style=\"color:#FFFFFF\">Formatted log</p>" + System.lineSeparator();
 
         _htmlEnd  = "</body>" + System.lineSeparator();
@@ -47,31 +59,50 @@ public class LogPage
     {
         _hasNext = false;
     }
-
+    
     public void print()
     {
-        System.out.println(_htmlBegin);
-        System.out.println(_htmlContent);
+        String fileContent;
+        
+        fileContent = _htmlBegin;
+        fileContent += _htmlContent;
+        if (_hasPrev || _hasNext)
+        {
+            fileContent += "<br />" + System.lineSeparator();
+        }
         if (_hasPrev)
         {
-            System.out.print(_htmlLinkBegin);
-            System.out.print(_pageNo-1);
-            System.out.print(_htmlPrevEnd);
+            fileContent += _htmlLinkBegin;
+            fileContent += _pageNo - 1;
+            fileContent += _htmlPrevEnd;
         }
         if (_hasPrev && _hasNext)
         {
-            System.out.print(" - ");
+            fileContent += " - ";
         }
         if (_hasNext)
         {
-            System.out.print(_htmlLinkBegin);
-            System.out.print(_pageNo+1);
-            System.out.print(_htmlNextEnd);
+            fileContent += _htmlLinkBegin;
+            fileContent += _pageNo + 1;
+            fileContent += _htmlNextEnd;
         }
         if (_hasPrev || _hasNext)
         {
-            System.out.println();
+            fileContent += System.lineSeparator();
         }
-        System.out.println(_htmlEnd);
+        fileContent += _htmlEnd;
+        
+        System.out.println("Writing file number " + (_pageNo + 1) + "...");
+        
+        Path filepath = Paths.get("./page" + _pageNo + ".html");
+        
+        try
+        {
+            Files.write(filepath, fileContent.getBytes());
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error writing file.");
+        }
     }
 }

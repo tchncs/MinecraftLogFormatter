@@ -38,6 +38,8 @@ public class LogFormatter
         {
             page.print();
         }
+        
+        System.out.println("Done.");
     }
     
     /**
