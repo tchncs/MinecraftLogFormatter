@@ -52,6 +52,26 @@ public class LogPage
     {
         System.out.println(_htmlBegin);
         System.out.println(_htmlContent);
+        if (_hasPrev)
+        {
+            System.out.print(_htmlLinkBegin);
+            System.out.print(_pageNo-1);
+            System.out.print(_htmlPrevEnd);
+        }
+        if (_hasPrev && _hasNext)
+        {
+            System.out.print(" - ");
+        }
+        if (_hasNext)
+        {
+            System.out.print(_htmlLinkBegin);
+            System.out.print(_pageNo+1);
+            System.out.print(_htmlNextEnd);
+        }
+        if (_hasPrev || _hasNext)
+        {
+            System.out.println();
+        }
         System.out.println(_htmlEnd);
     }
 }

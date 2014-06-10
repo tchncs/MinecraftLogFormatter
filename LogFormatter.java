@@ -49,26 +49,26 @@ public class LogFormatter
      */
     private static String initFile(String[] args)
     {
-        String file = "/home/christian/test";
+        String file;
         
-//        if (args.length > 0)
-//        {
-//            file = args[0];
-//        }
-//        else
-//        {
-//            System.out.print("Enter file location:" + System.lineSeparator());
-//            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//            try
-//            {
-//                file = br.readLine();
-//            }
-//            catch (IOException ioe)
-//            {
-//                System.out.println("IO error trying to read the filename");
-//                System.exit(1);
-//            }
-//        }
+        if (args.length > 0)
+        {
+            file = args[0];
+        }
+        else
+        {
+            System.out.print("Enter file location:" + System.lineSeparator());
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try
+            {
+                file = br.readLine();
+            }
+            catch (IOException ioe)
+            {
+                System.out.println("IO error trying to read the filename");
+                System.exit(1);
+            }
+        }
         
         return file;
     }
