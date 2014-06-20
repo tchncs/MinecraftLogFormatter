@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="MinecraftLogFormater" basedir="." default="build">
+<project name="MinecraftLogFormatter" basedir="." default="build">
     <property name="src.dir" value="./"/>
     <property name="build.dir" value="bin"/>
 
@@ -9,7 +9,7 @@
         <javac destdir="${build.dir}" source="1.7" target="1.7">
             <src path="${src.dir}"/>
         </javac>
-        <jar destfile="${basedir}/MinecraftLogFormater.jar"
+        <jar destfile="${basedir}/MinecraftLogFormatter.jar"
              basedir="${build.dir}">
              <manifest>
                 <attribute name="Main-Class" value="de.agent94ger.minecraft.LogFormatter.LogFormatter"/>
