@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Minecraft log</title>
+</head>
+<body bgcolor=#000000>
+<style type="text/css">
+  a:link { color:#FFFFFF; }
+  a:visited { color:#FFFFFF; }
+  a:hover { color:#FFFFFF; }
+  a:active { color:#FFFFFF; }
+  a:focus { color:#FFFFFF; }
+</style>
+<p style="color:#FFFFFF">Formatted log</p>
