@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project name="MinecraftLogFormatter" basedir="." default="build">
+    <property name="src.dir" value="./"/>
+    <property name="build.dir" value="bin"/>
+
+
+    <target name="build" description="Compiling the Project LogFormatter">
+        <mkdir dir ="${build.dir}"/>
+        <javac destdir="${build.dir}" source="1.7" target="1.7">
+            <src path="${src.dir}"/>
+        </javac>
+        <jar destfile="${basedir}/MinecraftLogFormatter.jar"
+             basedir="${build.dir}">
+             <manifest>
+                <attribute name="Main-Class" value="de.agent94ger.minecraft.LogFormatter.LogFormatter"/>
+             </manifest>
+        </jar>
+    </target>
+    
+    <target name="clean">
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </delete>
+    </target>
+</project>
