@@ -4,7 +4,7 @@
     <property name="build.dir" value="bin"/>
 
 
-    <target name="build" description="Compiling the Project MouseBalance">
+    <target name="build" description="Compiling the Project LogFormatter">
         <mkdir dir ="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.7" target="1.7">
             <src path="${src.dir}"/>
