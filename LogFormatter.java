@@ -13,7 +13,7 @@ import java.util.Scanner;
  * A simple cli created to compile Minecraft-serverlogs into HTML-files.
  * 
  * @author agent94ger
- * @version Beta-1.0
+ * @version Beta-1.1
  */
 public class LogFormatter
 {
